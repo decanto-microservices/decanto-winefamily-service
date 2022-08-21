@@ -9,14 +9,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func GetWinefamilies(page int64, limit int64) []models.Winefamily {
+func GetWinefamilies(page int64, limit int64, filters *bson.M) []models.Winefamily {
 	findOptions := options.Find()
 
 	findOptions.SetLimit(limit)
 	findOptions.SetSkip((page - 1) * limit)
 
 	var winefamilies []models.Winefamily
-	cursor, err := models.WinefamilyCollection.Find(context.TODO(), bson.D{}, findOptions)
+	cursor, err := models.WinefamilyCollection.Find(context.TODO(), *filters, findOptions)
 
 	if err != nil {
 		panic(err)

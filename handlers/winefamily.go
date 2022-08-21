@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/Gprisco/decanto-winefamily-service/services"
+	servHelpers "github.com/Gprisco/decanto-winefamily-service/services/helpers"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -38,7 +39,14 @@ func GetWinefamilies(c *gin.Context) {
 		return
 	}
 
-	winefamilies := services.GetWinefamilies(page, limit)
+	filters, err := servHelpers.BuildFiltersFromContext(c)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	winefamilies := services.GetWinefamilies(page, limit, filters)
 	c.JSON(http.StatusOK, winefamilies)
 }
 
