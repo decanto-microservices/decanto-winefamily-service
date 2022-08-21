@@ -9,7 +9,7 @@ import (
 
 type Winefamily struct {
 	ID         primitive.ObjectID `bson:"_id" json:"_id"`
-	Winefamily string             `bson:"winefamily" json:"winefamily"`
+	Winefamily string             `bson:"winefamilyText" json:"winefamily"`
 }
 
 var WinefamilyCollection *mongo.Collection = db.GetInstance().Client().Database(env.GetInstance().DB).Collection("a_winefamilies")
